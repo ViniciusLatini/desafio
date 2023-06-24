@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 
+
 import Card from './components/Card';
+import CardSkeleton from './components/CardSkeleton';
 
 interface Game {
   id: number;
@@ -18,6 +20,7 @@ interface Game {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState<Game []>([]);
   const [search, setSearch] = useState('');
 
@@ -33,10 +36,9 @@ function App() {
     .filter((genre,i,currentValue) => currentValue.indexOf(genre) === i)
     : [];
 
-  console.log(genres)
-
   // Consulta a API retornando a lista de jogos
   useEffect(() => {
+    setIsLoading(true)
     fetch(url, {
       method: "GET",
       mode: "cors",
@@ -49,6 +51,7 @@ function App() {
     })
     .then(response => response.json())
     .then(data => setGames(data))
+    .finally(() => setIsLoading(false))
   },[])
 
   return (
@@ -68,32 +71,22 @@ function App() {
             <option id={genre} value={genre}>{genre}</option>
           )}
         </select>
+
       </div>
 
-      {search.length > 0 && games.length > 0 ? (
+      {isLoading ? (
         <div className="cardsContainer">
-          {filteredGames.map(game => {
-            return (
-              <Card
-                title={game.title}
-                id={game.id}
-                thumbnail={game.thumbnail}
-                short_description={game.short_description}
-                game_url={game.game_url}
-                genre={game.genre}
-                platform={game.platform}
-                publisher={game.publisher}
-                developer={game.developer}
-                release_date={game.release_date}
-                freetogame_profile_url={game.freetogame_profile_url}
-              />
-            )
-          })}
+          <CardSkeleton/>
+          <CardSkeleton/>
+          <CardSkeleton/>
+          <CardSkeleton/>
+          <CardSkeleton/>
+          <CardSkeleton/>
         </div>
       ) : (
         <div className="cardsContainer">
-          {games.map(game => {
-            return (
+          {search.length > 0 ? (
+            filteredGames.map(game => (
               <Card
                 title={game.title}
                 id={game.id}
@@ -107,8 +100,24 @@ function App() {
                 release_date={game.release_date}
                 freetogame_profile_url={game.freetogame_profile_url}
               />
-            )
-          })}
+            ))
+          ) : (
+            games.map(game => (
+              <Card
+                title={game.title}
+                id={game.id}
+                thumbnail={game.thumbnail}
+                short_description={game.short_description}
+                game_url={game.game_url}
+                genre={game.genre}
+                platform={game.platform}
+                publisher={game.publisher}
+                developer={game.developer}
+                release_date={game.release_date}
+                freetogame_profile_url={game.freetogame_profile_url}
+              />
+            ))
+          )}
         </div>
       )}
     </div>

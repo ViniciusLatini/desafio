@@ -6,6 +6,10 @@
   justify-content: center;
 }
 
+.teste {
+  flex: 1
+}
+
 input {
   width: 31.375rem;
   height: 3.8125rem;
