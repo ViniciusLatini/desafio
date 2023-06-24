@@ -1,0 +1,37 @@
+.headerContainer {
+  display: flex;
+  gap: 0.69rem;
+  margin-top: 4.69rem;
+  margin-bottom: 2.94rem;
+  justify-content: center;
+}
+
+input {
+  width: 31.375rem;
+  height: 3.8125rem;
+  background-color: #FFF;
+  border-radius: 20px;
+  padding-left: 1.75rem;
+  font-weight: 500;
+  font-size: 1rem;
+  }
+
+select {
+  width: 13.4375rem;
+  height: 3.8125rem;
+  border-radius: 20px;
+  background: #FFF;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+}
+
+.cardsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem
+}
+
+teste {
+  color: white;
+  font-size: 40rem;
+}
