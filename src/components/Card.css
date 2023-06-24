@@ -1,0 +1,37 @@
+.cardContainer {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+
+  flex-direction: column;
+}
+
+img {
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.descriptionContainer {
+  width: 100%;
+  padding: 3.25rem 2.56rem 0.4rem 2.56rem;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.90) 67.08%);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0px 0px 6px 6px;
+  margin-bottom: 0.15rem;
+}
+
+.descriptionContainer strong {
+  font-weight: 700;
+  color: #FFF;
+  display: block
+}
+
+.descriptionContainer span {
+  color: #D4D4D8;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  display: block;
+}
