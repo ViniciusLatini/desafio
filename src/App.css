@@ -32,10 +32,32 @@ select {
 .cardsContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 2rem
+  gap: 2rem;
 }
 
-teste {
-  color: white;
-  font-size: 40rem;
+@media(max-width:1201px) {
+  .cardsContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width:810px) {
+  .cardsContainer {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+@media(max-width:650px) {
+  .headerContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  select, input {
+    width: 100%;
+  }
+
 }

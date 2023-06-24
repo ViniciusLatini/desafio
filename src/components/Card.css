@@ -12,7 +12,7 @@ img {
 }
 
 .descriptionContainer {
-  width: 100%;
+  width: 365px;
   padding: 3.25rem 2.56rem 0.4rem 2.56rem;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.90) 67.08%);
   position: absolute;
