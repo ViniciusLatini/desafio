@@ -27,7 +27,7 @@ function App() {
   const [error, setError] = useState('');
 
   const errorMessages = {
-    serverFailed: "O servidor fahou em responder, tente recarregar a página",
+    serverFailed: "O servidor falhou em responder, tente recarregar a página",
     timeoutRequest: "O servidor demorou para responder, tente mais tarde.",
     serverError: "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
   }
@@ -35,11 +35,13 @@ function App() {
   const email = "email@email.com";
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
-  const filteredGames = search.length > 0 && games.length > 0 // Filtrando os jogos de acordo com a pesquisa
+  // Filtrando os jogos de acordo com a pesquisa
+  const filteredGames = search.length > 0 && games.length > 0
     ? games?.filter(game => game.title.includes(search))
     : [];
 
-  const genres = games.length > 0 //Filtrando generos de forma unica
+  //Filtrando generos de forma unica
+  const genres = games.length > 0
     ? games?.map(game => game.genre)
     .filter((genre,i,currentValue) => currentValue.indexOf(genre) === i)
     : [];
@@ -48,12 +50,15 @@ function App() {
   useEffect(() => {
     setIsLoading(true)
     const ac = new AbortController()
+
+    // Cancelando requisição caso gaste mais que 5s
     const timer = setTimeout(async () => {
       await ac.abort();
       setError(errorMessages.timeoutRequest)
       setIsLoading(false);
     }, 5000);
 
+    // Requisição API
     try {
       fetch(url, {
         method: "GET",
