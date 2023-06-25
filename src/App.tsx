@@ -24,7 +24,7 @@ function App() {
   const [games, setGames] = useState<Game []>([]);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState(0);
-  const [timeoutRequest, setTimeoutRequest] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState('');
 
   const email = "email@email.com";
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
@@ -87,7 +87,11 @@ function App() {
           onChange={e => setSearch(e.target.value)}
         />
 
-        <select name="genres" >
+        <select
+          name="genres"
+          value={selectedGenre}
+          onChange={e => setSelectedGenre(e.target.value)}
+        >
           <option value={''} hidden> Escolha um genero</option>
           {genres.map(genre =>
             <option key={genre} id={genre} value={genre}>{genre}</option>
@@ -109,25 +113,8 @@ function App() {
         status >= 200 && status <= 299 ? (
           <div className="cardsContainer">
             {search.length > 0  ? (
-              filteredGames.map(game => (
-                <Card
-                  title={game.title}
-                  id={game.id}
-                  key={game.id}
-                  thumbnail={game.thumbnail}
-                  short_description={game.short_description}
-                  game_url={game.game_url}
-                  genre={game.genre}
-                  platform={game.platform}
-                  publisher={game.publisher}
-                  developer={game.developer}
-                  release_date={game.release_date}
-                  freetogame_profile_url={game.freetogame_profile_url}
-                />
-              ))
-            ) : (
-              games.length > 0 && (
-                games.map(game => (
+              selectedGenre !== '' ? (
+                filteredGames.filter(game => game.genre === selectedGenre).map(game => (
                   <Card
                     title={game.title}
                     id={game.id}
@@ -143,6 +130,61 @@ function App() {
                     freetogame_profile_url={game.freetogame_profile_url}
                   />
                 ))
+              ) : (
+                filteredGames.map(game => (
+                  <Card
+                    title={game.title}
+                    id={game.id}
+                    key={game.id}
+                    thumbnail={game.thumbnail}
+                    short_description={game.short_description}
+                    game_url={game.game_url}
+                    genre={game.genre}
+                    platform={game.platform}
+                    publisher={game.publisher}
+                    developer={game.developer}
+                    release_date={game.release_date}
+                    freetogame_profile_url={game.freetogame_profile_url}
+                  />
+                ))
+              )
+            ) : (
+              selectedGenre !== '' && games.length > 0 ? (
+                games.filter(game => game.genre === selectedGenre).map(game => (
+                  <Card
+                      title={game.title}
+                      id={game.id}
+                      key={game.id}
+                      thumbnail={game.thumbnail}
+                      short_description={game.short_description}
+                      game_url={game.game_url}
+                      genre={game.genre}
+                      platform={game.platform}
+                      publisher={game.publisher}
+                      developer={game.developer}
+                      release_date={game.release_date}
+                      freetogame_profile_url={game.freetogame_profile_url}
+                    />
+                )
+              )) : (
+                games.length > 0 && (
+                  games.map(game => (
+                    <Card
+                      title={game.title}
+                      id={game.id}
+                      key={game.id}
+                      thumbnail={game.thumbnail}
+                      short_description={game.short_description}
+                      game_url={game.game_url}
+                      genre={game.genre}
+                      platform={game.platform}
+                      publisher={game.publisher}
+                      developer={game.developer}
+                      release_date={game.release_date}
+                      freetogame_profile_url={game.freetogame_profile_url}
+                    />
+                  ))
+                )
               )
             )}
           </div>
