@@ -23,8 +23,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState<Game []>([]);
   const [search, setSearch] = useState('');
-  const [status, setStatus] = useState(0);
   const [selectedGenre, setSelectedGenre] = useState('');
+  const [error, setError] = useState('');
+
+  const errorMessages = {
+    serverFailed: "O servidor fahou em responder, tente recarregar a página",
+    timeoutRequest: "O servidor demorou para responder, tente mais tarde.",
+    serverError: "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
+  }
 
   const email = "email@email.com";
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
@@ -42,7 +48,11 @@ function App() {
   useEffect(() => {
     setIsLoading(true)
     const ac = new AbortController()
-    const timer = setTimeout(() => ac.abort(), 5000);
+    const timer = setTimeout(async () => {
+      await ac.abort();
+      setError(errorMessages.timeoutRequest)
+      setIsLoading(false);
+    }, 5000);
 
     try {
       fetch(url, {
@@ -57,7 +67,15 @@ function App() {
         }
       })
       .then((response) => {
-        setStatus(response.status)
+        let status = response.status;
+
+        if(status >= 200 && status <= 299)
+          setError('');
+        else if(status === 500 || (status >= 502 && status <= 504) || (status >= 507 && status <= 509))
+          setError(errorMessages.serverFailed);
+        else
+          setError(errorMessages.serverError);
+
         clearTimeout(timer);
         return response.json()
       })
@@ -73,7 +91,6 @@ function App() {
       clearTimeout(timer);
       console.log(error);
     }
-
   },[])
 
   return (
@@ -92,7 +109,7 @@ function App() {
           value={selectedGenre}
           onChange={e => setSelectedGenre(e.target.value)}
         >
-          <option value={''} hidden> Escolha um genero</option>
+          <option value={''} > Todos gêneros</option>
           {genres.map(genre =>
             <option key={genre} id={genre} value={genre}>{genre}</option>
           )}
@@ -110,7 +127,7 @@ function App() {
           <CardSkeleton/>
         </div>
       ) : (
-        status >= 200 && status <= 299 ? (
+        error === '' ? (
           <div className="cardsContainer">
             {search.length > 0  ? (
               selectedGenre !== '' ? (
@@ -152,19 +169,19 @@ function App() {
               selectedGenre !== '' && games.length > 0 ? (
                 games.filter(game => game.genre === selectedGenre).map(game => (
                   <Card
-                      title={game.title}
-                      id={game.id}
-                      key={game.id}
-                      thumbnail={game.thumbnail}
-                      short_description={game.short_description}
-                      game_url={game.game_url}
-                      genre={game.genre}
-                      platform={game.platform}
-                      publisher={game.publisher}
-                      developer={game.developer}
-                      release_date={game.release_date}
-                      freetogame_profile_url={game.freetogame_profile_url}
-                    />
+                    title={game.title}
+                    id={game.id}
+                    key={game.id}
+                    thumbnail={game.thumbnail}
+                    short_description={game.short_description}
+                    game_url={game.game_url}
+                    genre={game.genre}
+                    platform={game.platform}
+                    publisher={game.publisher}
+                    developer={game.developer}
+                    release_date={game.release_date}
+                    freetogame_profile_url={game.freetogame_profile_url}
+                  />
                 )
               )) : (
                 games.length > 0 && (
@@ -189,17 +206,10 @@ function App() {
             )}
           </div>
         ) : (
-          status >= 500 && status <= 599 ? (
-            <div className="errorContainer">
-              <h1>Ops! Não conseguimos achar seus jogos ;-;</h1>
-              <p>O servidor falhou em responder, tente recarregar a página!</p>
-            </div>
-          ) : (
-            <div className="errorContainer">
-              <h1>Ops! Não conseguimos achar seus jogos ;-;</h1>
-              <p>O servidor demorou para responder, tente mais tarde</p>
-            </div>
-          )
+          <div className="errorContainer">
+            <h1>Ops! Não conseguimos achar seus jogos ;-;</h1>
+            <p>{error}</p>
+          </div>
         )
 
       )}
