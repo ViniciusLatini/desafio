@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+<h1 align="center">
+    Desafio
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br/>
 
-## Available Scripts
+## Descrição
 
-In the project directory, you can run:
+Esse projeto é um desafio, onde é necessário descobrir como funciona a API e listar os jogos em cards. Além disso, é necessário filtrar os jogos pelo nome e gênero.
 
-### `npm start`
+Link do projeto: https://desafio-gamma.vercel.app/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tecnologias
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Esse projeto foi desenvolvido utilizando **React.JS** e **Typescript**, além da lib **react-loading-skeleton**
 
-### `npm test`
+## Requisitos Funcionais
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [x] O projeto deve ser feito usando React ou Next.JS
+- [x] Obter a lista de jogos em /data
+- [x] Apresentar um loader enquanto os dados são obtidos
+- [x] Apresentar os jogos em três colunas (no computador)
+- [x] Em cada card apresentar o título e imagem pelo ao menos
+- [x] Lidar com a responsividade, para que fique bem apresentado no computador, tablets ou celular
+- [x] Quando a API retornar o status code 500, 502, 503, 504, 507, 508 ou 509 apresentar ao usuário O servidor falhou em responder, tente recarregar a página
+- [x] Caso a API retorne outros erros, apresentar O servidor não conseguirá responder por agora, tente voltar novamente mais tarde
+- [x] Ao realizar uma chamada, não esperar mais que 5 segundos pelo retorno. Se os dados demorarem mais de 5 segundos para retornar apresentar O servidor demorou para responder, tente mais tarde
+- [x] Sempre que apresentar uma mensagem para o usuário, ou tiver os dados em mãos para apresentar, ocultar o loader
+- [x] Incluir um campo de busca, que permite localizar jogos pelo título, com busca case insensitive
+- [x] Uma vez que tenha os dados em mãos, veja quais genre foram retornados e permita ao usuário selecionar um deles, e então filtre para exibir apenas jogos do gênero selecionado
 
-### `npm run build`
+<br/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Abaixo seguem algumas prints de todo o projeto
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<img src="images/img1.png">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img src="images/img2.png">
 
-### `npm run eject`
+<img src="images/desafio.gif">
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<br>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contato
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[![LinkedIn][linkedin-shield] ][linkedin-url]
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Vinícius Latini Gonçalves - viniciuslatini2001@gmail.com
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/viniciuslatini/
