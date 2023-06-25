@@ -35,6 +35,14 @@ select {
   gap: 2rem;
 }
 
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0rem 1rem;
+}
+
 @media(max-width:1201px) {
   .cardsContainer {
     grid-template-columns: 1fr 1fr;
@@ -55,6 +63,7 @@ select {
   .headerContainer {
     display: flex;
     flex-direction: column;
+    padding: 0rem 1rem;
   }
   select, input {
     width: 100%;
