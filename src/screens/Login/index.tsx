@@ -2,7 +2,8 @@
 function Login() {
   return(
     <div>
-      LOGIN
+      <input type="text"  />
+      <input type="text"  />
     </div>
   )
 }
