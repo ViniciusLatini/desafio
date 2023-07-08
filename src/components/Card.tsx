@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Card.css';
 import { Checkbox, Rating } from '@mui/material';
 import { Favorite, FavoriteBorder, StarBorder } from '@mui/icons-material';
+import { UserController } from '../core/controllers/User';
+import { AuthContext } from '../context/AuthContext';
 
 interface CardProps {
   id: number;
@@ -17,7 +19,10 @@ interface CardProps {
   freetogame_profile_url: string;
 }
 
-function Card({title, thumbnail, genre}:CardProps) {
+function Card({title, thumbnail, genre, id}:CardProps) {
+  const {user} = useContext(AuthContext);
+
+
   return(
     <div className='cardContainer'>
       <img src={thumbnail} alt={title} />
@@ -36,6 +41,18 @@ function Card({title, thumbnail, genre}:CardProps) {
           <Checkbox
             icon={<FavoriteBorder className='favorite' />}
             checkedIcon={<Favorite className='favoriteActive' />}
+            onClick={() => {
+              UserController().setFavorite(id, user.id)
+              .catch(
+                error => {
+                  if(error.message === "Nao logado") {
+                    //enviar pro login
+                  } else {
+                    //lançar aviso
+                  }
+                }
+              )
+            }}
           />
         </div>
       </div>
