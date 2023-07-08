@@ -20,6 +20,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*/*","routes.tsx"],
+  "include": ["src/**/**/*","routes.tsx"],
   "exclude": ["**/*.spec.ts"]
 }
