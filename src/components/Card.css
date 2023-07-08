@@ -5,11 +5,11 @@
   width: 365px;
   height: 205.99px;
   flex-direction: column;
-  transition-duration: .5s;
+  transition-duration: .4s;
 }
 
 .cardContainer:hover {
-  transition-delay: .5s;
+  transition-delay: .4s;
   width: 385px;
   height: 218.99px;
 }
@@ -23,13 +23,35 @@ img {
 
 .descriptionContainer {
   width: 100%;
-  padding: 3.25rem 2.56rem 0.4rem 2.56rem;
+  padding: 3.25rem 0.56rem 0.4rem 2.56rem;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.90) 67.08%);
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  justify-content: space-between;
+}
 
+.infos {
+
+}
+
+.buttons {
+ display: flex;
+ align-items: center;
+}
+
+.rating {
+  display: flex;
+}
+
+.favorite {
+  color: #D4D4D8;
+}
+
+.favoriteActive {
+  color: rgb(237, 19, 92);
 }
 
 .descriptionContainer strong {
@@ -38,7 +60,7 @@ img {
   display: block
 }
 
-.descriptionContainer span {
+.genre{
   color: #D4D4D8;
   font-size: 0.875rem;
   line-height: 1.25rem;

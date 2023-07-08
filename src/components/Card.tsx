@@ -1,5 +1,7 @@
 import React from 'react';
 import './Card.css';
+import { Checkbox, Rating } from '@mui/material';
+import { Favorite, FavoriteBorder, StarBorder } from '@mui/icons-material';
 
 interface CardProps {
   id: number;
@@ -21,8 +23,21 @@ function Card({title, thumbnail, genre}:CardProps) {
       <img src={thumbnail} alt={title} />
 
       <div className='descriptionContainer'>
-        <strong>{title}</strong>
-        <span>{genre}</span>
+        <div className='infos'>
+          <strong>{title}</strong>
+          <span className='genre'>{genre}</span>
+        </div>
+        <div className='buttons'>
+          <Rating
+            size="small"
+            emptyIcon={<StarBorder style={{ color:"#D4D4D8" }} fontSize="inherit" />}
+          />
+
+          <Checkbox
+            icon={<FavoriteBorder className='favorite' />}
+            checkedIcon={<Favorite className='favoriteActive' />}
+          />
+        </div>
       </div>
     </div>
   )
