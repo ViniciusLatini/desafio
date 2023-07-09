@@ -8,15 +8,18 @@ interface ContextProps {
   user: {
     id: string
   }
+  favorites: number[]
 
   login: (email: string, senha: string) => void
+  teste: () => void
 }
 
 export const AuthContext = createContext<ContextProps>({} as ContextProps);
 
 export function AuthContextProvider({ children } : {children: React.ReactNode}) {
 
-  const [user, setUser] = useState({id: ""});
+  const [user, setUser] = useState({id: "cCHboWYa9Ar5xjRZe49S"});
+  const [favorites, setFavorites] = useState([]);
 
   async function login(email: string, password: string) {
     try {
@@ -25,6 +28,18 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
         setUser({id: resp.user.uid});
     } catch (error : any) {
         throw new Error(error);
+    }
+  }
+
+  async function teste() {
+    try {
+      const res = await UserController().getFavorites(user.id)
+      await setFavorites(res);
+
+
+    } catch (error) {
+      console.log(error);
+
     }
   }
 
@@ -48,7 +63,7 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
   }, [])
 
   return (
-      <AuthContext.Provider value={{ user, login }}>
+      <AuthContext.Provider value={{ user, favorites, login, teste}}>
         {children}
       </AuthContext.Provider>
   )

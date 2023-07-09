@@ -1,4 +1,4 @@
-import { arrayUnion, doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc,  } from "firebase/firestore";
 import { firestoreDB } from "../../service/firebase";
 
 export function UserModel() {
@@ -7,6 +7,11 @@ export function UserModel() {
       doc(firestoreDB, "users", userId), //doc -> retorna o local do documento
       {createdAt: serverTimestamp()}
     );
+  }
+
+  async function getFavorites(userId: string) {
+    const res = await getDoc(doc(firestoreDB, "users", userId))
+    return res.get("favorites");
 
   }
 
@@ -23,5 +28,5 @@ export function UserModel() {
 
   }
 
-  return {setFavorite, setRating, create}
+  return {setFavorite, setRating, create, getFavorites}
 }

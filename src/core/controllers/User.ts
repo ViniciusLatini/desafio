@@ -5,6 +5,14 @@ export function UserController() {
     await UserModel().create(userId);
   }
 
+  async function getFavorites(userId : string) {
+    if(userId) {
+      return await UserModel().getFavorites(userId);
+    } else {
+      throw new Error("Nao logado");
+    }
+  }
+
   async function setFavorite(gameId : number, userId: string) {
     if(userId) {
       await UserModel().create(userId);
@@ -21,5 +29,5 @@ export function UserController() {
     }
   }
 
-  return {setFavorite, setRating, create}
+  return {setFavorite, getFavorites, setRating, create}
 }
