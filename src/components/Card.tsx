@@ -17,9 +17,10 @@ interface CardProps {
   developer: string;
   release_date: string;
   freetogame_profile_url: string;
+  favorite: boolean;
 }
 
-function Card({title, thumbnail, genre, id}:CardProps) {
+function Card({title, thumbnail, genre, id, favorite}:CardProps) {
   const {user} = useContext(AuthContext);
 
 
@@ -40,6 +41,7 @@ function Card({title, thumbnail, genre, id}:CardProps) {
 
           <Checkbox
             icon={<FavoriteBorder className='favorite' />}
+            checked={favorite}
             checkedIcon={<Favorite className='favoriteActive' />}
             onClick={() => {
               UserController().setFavorite(id, user.id)

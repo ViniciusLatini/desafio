@@ -1,8 +1,12 @@
-import './style.css';
+import { useEffect, useState, useContext } from 'react';
+import LoginIcon from '@mui/icons-material/Login';
 
+import { AuthContext } from '../../context/AuthContext';
 import Card from '../../components/Card';
 import CardSkeleton from '../../components/CardSkeleton';
-import { useEffect, useState } from 'react';
+
+import './style.css';
+import { Link } from 'react-router-dom';
 
 interface Game {
   id: number;
@@ -24,6 +28,8 @@ function Home() {
   const [search, setSearch] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [error, setError] = useState('');
+
+  const {user, teste, favorites} = useContext(AuthContext);
 
   const errorMessages = {
     serverFailed: "O servidor falhou em responder, tente recarregar a página",
@@ -97,8 +103,28 @@ function Home() {
     }
   },[])
 
+  useEffect(() => {
+    if(user.id){ //Verifica se o usuario esta logado
+      console.log("rodei");
+      teste();
+    }
+  },[user])
+
+  useEffect(() => {
+    if(favorites) {
+      console.log(favorites);
+
+    }
+  },[favorites])
+
   return (
     <div>
+      <div className="loginContainer">
+        <Link to="/auth">
+          <LoginIcon htmlColor='#FFF'/>
+        </Link>
+      </div>
+
       <div className="headerContainer">
         <input
           type="text"
@@ -149,6 +175,7 @@ function Home() {
                     developer={game.developer}
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
+                    favorite={favorites.includes(game.id)}
                   />
                 ))
               ) : (
@@ -166,6 +193,7 @@ function Home() {
                     developer={game.developer}
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
+                    favorite={favorites.includes(game.id)}
                   />
                 ))
               )
@@ -185,6 +213,7 @@ function Home() {
                     developer={game.developer}
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
+                    favorite={favorites.includes(game.id)}
                   />
                 )
               )) : (
@@ -203,6 +232,7 @@ function Home() {
                       developer={game.developer}
                       release_date={game.release_date}
                       freetogame_profile_url={game.freetogame_profile_url}
+                      favorite={favorites.includes(game.id)}
                     />
                   ))
                 )

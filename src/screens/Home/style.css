@@ -1,13 +1,15 @@
+.loginContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
 .headerContainer {
   display: flex;
   gap: 0.69rem;
-  margin-top: 4.69rem;
+  margin-top: 3.69rem;
   margin-bottom: 2.94rem;
   justify-content: center;
-}
-
-.teste {
-  flex: 1
 }
 
 input {
