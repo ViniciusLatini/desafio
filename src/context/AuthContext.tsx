@@ -1,6 +1,6 @@
 import React from 'react';
 import { createContext, useState, useEffect } from "react";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { UserController } from "../core/controllers/User";
 import { auth } from "../service/firebase";
 
@@ -14,6 +14,7 @@ interface ContextProps {
   }
 
   login: (email: string, senha: string) => void
+  cadastro: (email: string, senha: string) => void
   teste: () => void
 }
 
@@ -27,11 +28,20 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
 
   async function login(email: string, password: string) {
     try {
-        const resp = await signInWithEmailAndPassword(auth, email, password);
-        UserController().create(resp.user.uid);
-        setUser({id: resp.user.uid});
+      const resp = await signInWithEmailAndPassword(auth, email, password);
+      setUser({id: resp.user.uid});
     } catch (error : any) {
-        throw new Error(error);
+      throw new Error(error.code);
+    }
+  }
+
+  async function cadastro(email: string, password: string) {
+    try {
+      const resp = await createUserWithEmailAndPassword(auth, email, password);
+      UserController().create(resp.user.uid);
+      setUser({id: resp.user.uid});
+    } catch (error : any) {
+      throw new Error(error.code);
     }
   }
 
@@ -66,7 +76,7 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
   }, [])
 
   return (
-      <AuthContext.Provider value={{ user, favorites, ratings ,login, teste}}>
+      <AuthContext.Provider value={{ user, favorites, ratings ,login, cadastro, teste}}>
         {children}
       </AuthContext.Provider>
   )

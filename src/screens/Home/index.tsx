@@ -169,7 +169,7 @@ function Home() {
                     developer={game.developer}
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
-                    favorite={favorites.includes(game.id)}
+                    favorite={favorites ? favorites.includes(game.id) : false}
                     rating={ratings[game.id] ? ratings[game.id] : 0}
                   />
                 ))
@@ -188,7 +188,7 @@ function Home() {
                     developer={game.developer}
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
-                    favorite={favorites.includes(game.id)}
+                    favorite={favorites ? favorites.includes(game.id) : false}
                     rating={ratings[game.id] ? ratings[game.id] : 0}
                   />
                 ))
@@ -209,7 +209,7 @@ function Home() {
                     developer={game.developer}
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
-                    favorite={favorites.includes(game.id)}
+                    favorite={favorites ? favorites.includes(game.id) : false}
                     rating={ratings[game.id] ? ratings[game.id] : 0}
                   />
                 )
@@ -229,8 +229,8 @@ function Home() {
                       developer={game.developer}
                       release_date={game.release_date}
                       freetogame_profile_url={game.freetogame_profile_url}
-                      favorite={favorites.includes(game.id)}
-                      rating={ratings[game.id] ? ratings[game.id] : 0}
+                      favorite={favorites ? favorites.includes(game.id) : false}
+                      rating={ratings ? (ratings[game.id] ? ratings[game.id] : 0) : 0}
                     />
                   ))
                 )
