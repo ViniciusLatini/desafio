@@ -31,7 +31,7 @@ export function UserController() {
 
   async function setRating(rating : number, gameId : number, userId: string) {
     if(userId) {
-      await UserModel().create(userId);
+      await UserModel().setRating(rating, gameId ,userId);
     } else {
       throw new Error("Nao logado");
     }

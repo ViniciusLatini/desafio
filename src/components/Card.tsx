@@ -23,6 +23,7 @@ interface CardProps {
 function Card({title, thumbnail, genre, id, favorite}:CardProps) {
   const {user} = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(favorite);
+  const [rating, setRating] = useState(0);
 
   return(
     <div className='cardContainer'>
@@ -37,6 +38,13 @@ function Card({title, thumbnail, genre, id, favorite}:CardProps) {
           <Rating
             size="small"
             emptyIcon={<StarBorder style={{ color:"#D4D4D8" }} fontSize="inherit" />}
+            value={rating}
+            onChange={(event, newValue) => {
+              if(newValue) {
+                setRating(newValue);
+                UserController().setRating(newValue, id, user.id);
+              }
+            }}
           />
 
           <Checkbox
