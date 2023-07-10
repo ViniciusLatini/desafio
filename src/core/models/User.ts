@@ -27,6 +27,11 @@ export function UserModel() {
   });
   }
 
+  async function getRating(userId : string) {
+    const res = await getDoc(doc(firestoreDB, "users", userId))
+    return res.get("rating");
+  }
+
   async function setRating(rating : number, gameId : number, userId : string) {
     await updateDoc(doc(firestoreDB, "users", userId), {
       [`rating.${gameId}`] : rating
@@ -34,5 +39,5 @@ export function UserModel() {
 
   }
 
-  return {setFavorite, setRating, create, getFavorites, removeFavorite}
+  return {setFavorite, setRating, getRating, create, getFavorites, removeFavorite}
 }

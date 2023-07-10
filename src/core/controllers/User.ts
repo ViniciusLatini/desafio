@@ -29,6 +29,14 @@ export function UserController() {
     }
   }
 
+  async function getRating(userId : string) {
+    if(userId) {
+      return await UserModel().getRating(userId);
+    } else {
+      throw new Error("Nao logado");
+    }
+  }
+
   async function setRating(rating : number, gameId : number, userId: string) {
     if(userId) {
       await UserModel().setRating(rating, gameId ,userId);
@@ -37,5 +45,5 @@ export function UserController() {
     }
   }
 
-  return {setFavorite, removeFavorite, getFavorites, setRating, create}
+  return {setFavorite, removeFavorite, getFavorites, setRating, getRating, create}
 }

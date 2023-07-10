@@ -7,6 +7,7 @@ import CardSkeleton from '../../components/CardSkeleton';
 
 import './style.css';
 import { Link } from 'react-router-dom';
+import { UserController } from '../../core/controllers/User';
 
 interface Game {
   id: number;
@@ -29,7 +30,7 @@ function Home() {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [error, setError] = useState('');
 
-  const {user, teste, favorites} = useContext(AuthContext);
+  const {user, teste, favorites, ratings} = useContext(AuthContext);
 
   const errorMessages = {
     serverFailed: "O servidor falhou em responder, tente recarregar a página",
@@ -105,17 +106,10 @@ function Home() {
 
   useEffect(() => {
     if(user.id){ //Verifica se o usuario esta logado
-      console.log("rodei");
       teste();
+
     }
   },[user])
-
-  useEffect(() => {
-    if(favorites) {
-      console.log(favorites);
-
-    }
-  },[favorites])
 
   return (
     <div>
@@ -176,6 +170,7 @@ function Home() {
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
                     favorite={favorites.includes(game.id)}
+                    rating={ratings[game.id] ? ratings[game.id] : 0}
                   />
                 ))
               ) : (
@@ -194,6 +189,7 @@ function Home() {
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
                     favorite={favorites.includes(game.id)}
+                    rating={ratings[game.id] ? ratings[game.id] : 0}
                   />
                 ))
               )
@@ -214,6 +210,7 @@ function Home() {
                     release_date={game.release_date}
                     freetogame_profile_url={game.freetogame_profile_url}
                     favorite={favorites.includes(game.id)}
+                    rating={ratings[game.id] ? ratings[game.id] : 0}
                   />
                 )
               )) : (
@@ -233,6 +230,7 @@ function Home() {
                       release_date={game.release_date}
                       freetogame_profile_url={game.freetogame_profile_url}
                       favorite={favorites.includes(game.id)}
+                      rating={ratings[game.id] ? ratings[game.id] : 0}
                     />
                   ))
                 )
