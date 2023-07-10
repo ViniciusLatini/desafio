@@ -45,18 +45,31 @@ function Card({title, thumbnail, genre, id, favorite}:CardProps) {
             checkedIcon={<Favorite className='favoriteActive' />}
             onClick={() => {
               setIsFavorite(!isFavorite)
-              console.log(id);
-              
-              UserController().setFavorite(id, user.id)
-              .catch(
-                error => {
-                  if(error.message === "Nao logado") {
-                    //enviar pro login
-                  } else {
-                    //lançar aviso
+
+              if(!isFavorite) {
+                UserController().setFavorite(id, user.id)
+                .catch(
+                  error => {
+                    if(error.message === "Nao logado") {
+                      //enviar pro login
+                    } else {
+                      //lançar aviso
+                    }
                   }
-                }
-              )
+                )
+              } else {
+                UserController().removeFavorite(id,user.id)
+                .catch(
+                  error => {
+                    if(error.message === "Nao logado") {
+                      //enviar pro login
+                    } else {
+                      //lançar aviso
+                    }
+                  }
+                )
+              }
+
             }}
           />
         </div>

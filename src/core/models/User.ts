@@ -1,4 +1,4 @@
-import { arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc,  } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc,  } from "firebase/firestore";
 import { firestoreDB } from "../../service/firebase";
 
 export function UserModel() {
@@ -21,6 +21,12 @@ export function UserModel() {
   });
   }
 
+  async function removeFavorite(gameId : number, userId : string) {
+    await updateDoc(doc(firestoreDB, "users", userId), {
+      favorites: arrayRemove(gameId)
+  });
+  }
+
   async function setRating(rating : number, gameId : number, userId : string) {
     await updateDoc(doc(firestoreDB, "users", userId), {
       [`rating.[${gameId}]`] : rating
@@ -28,5 +34,5 @@ export function UserModel() {
 
   }
 
-  return {setFavorite, setRating, create, getFavorites}
+  return {setFavorite, setRating, create, getFavorites, removeFavorite}
 }
