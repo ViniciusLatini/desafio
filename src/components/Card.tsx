@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './Card.css';
 import { Checkbox, Rating } from '@mui/material';
 import { Favorite, FavoriteBorder, StarBorder } from '@mui/icons-material';
@@ -22,7 +22,7 @@ interface CardProps {
 
 function Card({title, thumbnail, genre, id, favorite}:CardProps) {
   const {user} = useContext(AuthContext);
-
+  const [isFavorite, setIsFavorite] = useState(favorite);
 
   return(
     <div className='cardContainer'>
@@ -41,9 +41,12 @@ function Card({title, thumbnail, genre, id, favorite}:CardProps) {
 
           <Checkbox
             icon={<FavoriteBorder className='favorite' />}
-            checked={favorite}
+            checked={isFavorite}
             checkedIcon={<Favorite className='favoriteActive' />}
             onClick={() => {
+              setIsFavorite(!isFavorite)
+              console.log(id);
+              
               UserController().setFavorite(id, user.id)
               .catch(
                 error => {
