@@ -22,7 +22,7 @@ interface CardProps {
 }
 
 function Card({title, thumbnail, genre, id, favorite, rating}:CardProps) {
-  const {user} = useContext(AuthContext);
+  const {user, updateFavorite, updateRating} = useContext(AuthContext);
   const [isFavorite, setIsFavorite] = useState(favorite);
   const [gameRating, setGameRating] = useState(rating);
 
@@ -40,10 +40,11 @@ function Card({title, thumbnail, genre, id, favorite, rating}:CardProps) {
             size="small"
             emptyIcon={<StarBorder style={{ color:"#D4D4D8" }} fontSize="inherit" />}
             value={gameRating}
-            onChange={(event, newValue) => {
+            onChange={async(event, newValue) => {
               if(newValue) {
                 setGameRating(newValue);
-                UserController().setRating(newValue, id, user.id);
+                await UserController().setRating(newValue, id, user.id);
+                updateRating();
               }
             }}
           />
@@ -52,11 +53,11 @@ function Card({title, thumbnail, genre, id, favorite, rating}:CardProps) {
             icon={<FavoriteBorder className='favorite' />}
             checked={isFavorite}
             checkedIcon={<Favorite className='favoriteActive' />}
-            onClick={() => {
+            onClick={async() => {
               setIsFavorite(!isFavorite)
 
               if(!isFavorite) {
-                UserController().setFavorite(id, user.id)
+                await UserController().setFavorite(id, user.id)
                 .catch(
                   error => {
                     if(error.message === "Nao logado") {
@@ -67,7 +68,7 @@ function Card({title, thumbnail, genre, id, favorite, rating}:CardProps) {
                   }
                 )
               } else {
-                UserController().removeFavorite(id,user.id)
+                await UserController().removeFavorite(id,user.id)
                 .catch(
                   error => {
                     if(error.message === "Nao logado") {
@@ -78,7 +79,7 @@ function Card({title, thumbnail, genre, id, favorite, rating}:CardProps) {
                   }
                 )
               }
-
+              updateFavorite();
             }}
           />
         </div>

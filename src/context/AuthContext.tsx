@@ -15,6 +15,8 @@ interface ContextProps {
 
   login: (email: string, senha: string) => void
   cadastro: (email: string, senha: string) => void
+  updateFavorite: () => void
+  updateRating: () => void
   teste: () => void
 }
 
@@ -45,10 +47,27 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
     }
   }
 
+  async function updateFavorite() {
+    try {
+      setFavorites(await UserController().getFavorites(user.id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updateRating() {
+    try {
+      setRatings(await UserController().getRating(user.id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function teste() {
     try {
       setFavorites(await UserController().getFavorites(user.id));
       setRatings(await UserController().getRating(user.id));
+
 
     } catch (error) {
       console.log(error);
@@ -76,7 +95,7 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
   }, [])
 
   return (
-      <AuthContext.Provider value={{ user, favorites, ratings ,login, cadastro, teste}}>
+      <AuthContext.Provider value={{ user, favorites, ratings ,login, cadastro, teste, updateFavorite, updateRating}}>
         {children}
       </AuthContext.Provider>
   )
