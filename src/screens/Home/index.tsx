@@ -7,7 +7,6 @@ import CardSkeleton from '../../components/CardSkeleton';
 
 import './style.css';
 import { Link } from 'react-router-dom';
-import { UserController } from '../../core/controllers/User';
 import { FavoriteBorder, StarBorder } from '@mui/icons-material';
 
 interface Game {
@@ -48,30 +47,22 @@ function Home() {
   function filterGames() {
     if(games.length > 0) {
       if(ratingSort > 0) {
-        let filteredGames = games.map(game => {
+        const filteredGames = games.map(game => {
           let gameRating = ratings[game.id] ? ratings[game.id] : 0;
           return {...game, 'rating':gameRating}
         })
-
-        if(ratingSort === 1)
-          return (
-            filteredGames
-            .filter(game => favoriteActive ? favorites.includes(game.id) : game)
-            .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
-            .filter(game => game.title.includes(search))
-            .sort((a,b) => b.rating - a.rating)
-          );
 
         return (
           filteredGames
           .filter(game => favoriteActive ? favorites.includes(game.id) : game)
           .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
           .filter(game => game.title.includes(search))
-          .sort((a,b) => a.rating - b.rating)
+          .sort((a,b) => ratingSort === 1 ? b.rating - a.rating : a.rating - b.rating)
         );
 
+
       } else {
-        let filteredGames = games
+        const filteredGames = games
         return (
           filteredGames
           .filter(game => favoriteActive ? favorites.includes(game.id) : game)
