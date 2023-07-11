@@ -10,6 +10,7 @@
   margin-top: 3.69rem;
   margin-bottom: 2.94rem;
   justify-content: center;
+  align-items: center;
 }
 
 input {
@@ -20,7 +21,8 @@ input {
   padding-left: 1.75rem;
   font-weight: 500;
   font-size: 1rem;
-  }
+  cursor: pointer;
+}
 
 select {
   width: 13.4375rem;
@@ -29,6 +31,28 @@ select {
   background: #FFF;
   padding: 0 1.5rem;
   font-size: 1rem;
+}
+
+.favoriteButton {
+  width: 2.625rem;
+  height: 2rem;
+  border-radius: 0.3125rem;
+  background: #2E2E35;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ratingButton {
+  width: 2.625rem;
+  height: 2rem;
+  border-radius: 0.3125rem;
+  background: #2E2E35;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cardsContainer {

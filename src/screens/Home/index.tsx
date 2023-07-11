@@ -8,6 +8,7 @@ import CardSkeleton from '../../components/CardSkeleton';
 import './style.css';
 import { Link } from 'react-router-dom';
 import { UserController } from '../../core/controllers/User';
+import { FavoriteBorder, StarBorder } from '@mui/icons-material';
 
 interface Game {
   id: number;
@@ -29,6 +30,7 @@ function Home() {
   const [search, setSearch] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [error, setError] = useState('');
+  const [favoriteActive, setFavoriteActive] = useState(false);
 
   const {user, teste, favorites, ratings} = useContext(AuthContext);
 
@@ -41,15 +43,22 @@ function Home() {
   const email = "email@email.com";
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
-  // Filtrando os jogos de acordo com a pesquisa
-  const filteredGames = search.length > 0 && games.length > 0
-    ? games?.filter(game => game.title.includes(search))
-    : [];
+  function filterGames() {
+    if(games.length > 0) {
+      return (
+        games
+        .filter(game => favoriteActive ? favorites.includes(game.id) : game)
+        .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
+        .filter(game => game.title.includes(search))
+      );
+    }
+    return [];
+  }
 
   //Filtrando generos de forma unica
   const genres = games.length > 0
     ? games?.map(game => game.genre)
-    .filter((genre,i,currentValue) => currentValue.indexOf(genre) === i)
+      .filter((genre,i,currentValue) => currentValue.indexOf(genre) === i)
     : [];
 
   // Consulta a API retornando a lista de jogos
@@ -139,6 +148,18 @@ function Home() {
           )}
         </select>
 
+        <button
+          type='button'
+          onClick={() => {setFavoriteActive(!favoriteActive)}}
+          className='favoriteButton'
+        >
+          <FavoriteBorder htmlColor='#EFEFF1'/>
+        </button>
+
+        <button type='button' className='ratingButton'>
+          <StarBorder htmlColor='#EFEFF1'/>
+        </button>
+
       </div>
 
       {isLoading ? (
@@ -153,89 +174,24 @@ function Home() {
       ) : (
         error === '' ? (
           <div className="cardsContainer">
-            {search.length > 0  ? (
-              selectedGenre !== '' ? (
-                filteredGames.filter(game => game.genre === selectedGenre).map(game => (
-                  <Card
-                    title={game.title}
-                    id={game.id}
-                    key={game.id}
-                    thumbnail={game.thumbnail}
-                    short_description={game.short_description}
-                    game_url={game.game_url}
-                    genre={game.genre}
-                    platform={game.platform}
-                    publisher={game.publisher}
-                    developer={game.developer}
-                    release_date={game.release_date}
-                    freetogame_profile_url={game.freetogame_profile_url}
-                    favorite={favorites ? favorites.includes(game.id) : false}
-                    rating={ratings[game.id] ? ratings[game.id] : 0}
-                  />
-                ))
-              ) : (
-                filteredGames.map(game => (
-                  <Card
-                    title={game.title}
-                    id={game.id}
-                    key={game.id}
-                    thumbnail={game.thumbnail}
-                    short_description={game.short_description}
-                    game_url={game.game_url}
-                    genre={game.genre}
-                    platform={game.platform}
-                    publisher={game.publisher}
-                    developer={game.developer}
-                    release_date={game.release_date}
-                    freetogame_profile_url={game.freetogame_profile_url}
-                    favorite={favorites ? favorites.includes(game.id) : false}
-                    rating={ratings[game.id] ? ratings[game.id] : 0}
-                  />
-                ))
-              )
-            ) : (
-              selectedGenre !== '' && games.length > 0 ? (
-                games.filter(game => game.genre === selectedGenre).map(game => (
-                  <Card
-                    title={game.title}
-                    id={game.id}
-                    key={game.id}
-                    thumbnail={game.thumbnail}
-                    short_description={game.short_description}
-                    game_url={game.game_url}
-                    genre={game.genre}
-                    platform={game.platform}
-                    publisher={game.publisher}
-                    developer={game.developer}
-                    release_date={game.release_date}
-                    freetogame_profile_url={game.freetogame_profile_url}
-                    favorite={favorites ? favorites.includes(game.id) : false}
-                    rating={ratings[game.id] ? ratings[game.id] : 0}
-                  />
-                )
-              )) : (
-                games.length > 0 && (
-                  games.map(game => (
-                    <Card
-                      title={game.title}
-                      id={game.id}
-                      key={game.id}
-                      thumbnail={game.thumbnail}
-                      short_description={game.short_description}
-                      game_url={game.game_url}
-                      genre={game.genre}
-                      platform={game.platform}
-                      publisher={game.publisher}
-                      developer={game.developer}
-                      release_date={game.release_date}
-                      freetogame_profile_url={game.freetogame_profile_url}
-                      favorite={favorites ? favorites.includes(game.id) : false}
-                      rating={ratings ? (ratings[game.id] ? ratings[game.id] : 0) : 0}
-                    />
-                  ))
-                )
-              )
-            )}
+            {filterGames().map(game => (
+              <Card
+                title={game.title}
+                id={game.id}
+                key={game.id}
+                thumbnail={game.thumbnail}
+                short_description={game.short_description}
+                game_url={game.game_url}
+                genre={game.genre}
+                platform={game.platform}
+                publisher={game.publisher}
+                developer={game.developer}
+                release_date={game.release_date}
+                freetogame_profile_url={game.freetogame_profile_url}
+                favorite={favorites ? favorites.includes(game.id) : false}
+                rating={ratings[game.id] ? ratings[game.id] : 0}
+              />
+            ))}
           </div>
         ) : (
           <div className="errorContainer">
