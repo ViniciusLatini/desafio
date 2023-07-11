@@ -22,6 +22,7 @@ interface Game {
   developer: string;
   release_date: string;
   freetogame_profile_url: string;
+  rating?: number;
 }
 
 function Home() {
@@ -31,6 +32,7 @@ function Home() {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [error, setError] = useState('');
   const [favoriteActive, setFavoriteActive] = useState(false);
+  const [ratingSort, setRatingSort] = useState(0);
 
   const {user, teste, favorites, ratings} = useContext(AuthContext);
 
@@ -45,12 +47,38 @@ function Home() {
 
   function filterGames() {
     if(games.length > 0) {
-      return (
-        games
-        .filter(game => favoriteActive ? favorites.includes(game.id) : game)
-        .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
-        .filter(game => game.title.includes(search))
-      );
+      if(ratingSort > 0) {
+        let filteredGames = games.map(game => {
+          let gameRating = ratings[game.id] ? ratings[game.id] : 0;
+          return {...game, 'rating':gameRating}
+        })
+
+        if(ratingSort === 1)
+          return (
+            filteredGames
+            .filter(game => favoriteActive ? favorites.includes(game.id) : game)
+            .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
+            .filter(game => game.title.includes(search))
+            .sort((a,b) => b.rating - a.rating)
+          );
+
+        return (
+          filteredGames
+          .filter(game => favoriteActive ? favorites.includes(game.id) : game)
+          .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
+          .filter(game => game.title.includes(search))
+          .sort((a,b) => a.rating - b.rating)
+        );
+
+      } else {
+        let filteredGames = games
+        return (
+          filteredGames
+          .filter(game => favoriteActive ? favorites.includes(game.id) : game)
+          .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
+          .filter(game => game.title.includes(search))
+        );
+      }
     }
     return [];
   }
@@ -120,6 +148,12 @@ function Home() {
     }
   },[user])
 
+  useEffect(() => {
+    if(user.id){ //Verifica se o usuario esta logado
+      console.log(ratings);
+    }
+  },[ratings,games])
+
   return (
     <div>
       <div className="loginContainer">
@@ -156,7 +190,11 @@ function Home() {
           <FavoriteBorder htmlColor='#EFEFF1'/>
         </button>
 
-        <button type='button' className='ratingButton'>
+        <button
+          type='button'
+          className='ratingButton'
+          onClick={() => setRatingSort(ratingSort === 2 ? 0 : ratingSort+1)}
+        >
           <StarBorder htmlColor='#EFEFF1'/>
         </button>
 
