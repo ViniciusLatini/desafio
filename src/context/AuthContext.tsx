@@ -17,14 +17,14 @@ interface ContextProps {
   cadastro: (email: string, senha: string) => void
   updateFavorite: () => void
   updateRating: () => void
-  teste: () => void
+  load: () => void
 }
 
 export const AuthContext = createContext<ContextProps>({} as ContextProps);
 
 export function AuthContextProvider({ children } : {children: React.ReactNode}) {
 
-  const [user, setUser] = useState({id: "cCHboWYa9Ar5xjRZe49S"});
+  const [user, setUser] = useState({id: ""});
   const [favorites, setFavorites] = useState([]);
   const [ratings, setRatings] = useState({});
 
@@ -63,15 +63,12 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
     }
   }
 
-  async function teste() {
+  async function load() {
     try {
       setFavorites(await UserController().getFavorites(user.id));
       setRatings(await UserController().getRating(user.id));
-
-
     } catch (error) {
       console.log(error);
-
     }
   }
 
@@ -95,7 +92,7 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
   }, [])
 
   return (
-      <AuthContext.Provider value={{ user, favorites, ratings ,login, cadastro, teste, updateFavorite, updateRating}}>
+      <AuthContext.Provider value={{ user, favorites, ratings ,login, cadastro, load, updateFavorite, updateRating}}>
         {children}
       </AuthContext.Provider>
   )
