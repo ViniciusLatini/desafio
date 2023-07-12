@@ -7,9 +7,9 @@ import CardSkeleton from '../../components/CardSkeleton';
 
 import './style.css';
 import { Link } from 'react-router-dom';
-import { FavoriteBorder, StarBorder } from '@mui/icons-material';
 import FavoriteButton from '../../components/FavoriteButton';
 import RatingButton from '../../components/RatingButton';
+import ModalAlert from '../../components/ModalAlert';
 
 interface Game {
   id: number;
@@ -35,7 +35,10 @@ function Home() {
   const [favoriteActive, setFavoriteActive] = useState(false);
   const [ratingSort, setRatingSort] = useState(0);
 
-  const {user, teste, favorites, ratings} = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+
+
+  const {user, favorites, ratings} = useContext(AuthContext);
 
   const errorMessages = {
     serverFailed: "O servidor falhou em responder, tente recarregar a página",
@@ -134,18 +137,6 @@ function Home() {
     }
   },[])
 
-  useEffect(() => {
-    if(user.id){ //Verifica se o usuario esta logado
-      teste();
-
-    }
-  },[user])
-
-  useEffect(() => {
-    if(user.id){ //Verifica se o usuario esta logado
-      console.log(ratings);
-    }
-  },[ratings,games])
 
   return (
     <div>
@@ -175,15 +166,17 @@ function Home() {
           )}
         </select>
 
-        <FavoriteButton
-          favoriteActive = {favoriteActive}
-          setFavoriteActive={setFavoriteActive}
-        />
+        <div className='filterButtonsContainer'>
+          <FavoriteButton
+            favoriteActive = {favoriteActive}
+            setFavoriteActive={setFavoriteActive}
+          />
 
-        <RatingButton
-          ratingSort={ratingSort}
-          setRatingSort={setRatingSort}
-        />
+          <RatingButton
+            ratingSort={ratingSort}
+            setRatingSort={setRatingSort}
+          />
+        </div>
 
       </div>
 
@@ -215,6 +208,7 @@ function Home() {
                 freetogame_profile_url={game.freetogame_profile_url}
                 favorite={favorites ? favorites.includes(game.id) : false}
                 rating={ratings[game.id] ? ratings[game.id] : 0}
+                setOpen={setOpen}
               />
             ))}
           </div>
@@ -226,6 +220,11 @@ function Home() {
         )
 
       )}
+
+      <ModalAlert
+        open={open}
+        setOpen={setOpen}
+      />
     </div>
   );
 }

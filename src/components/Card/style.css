@@ -5,13 +5,6 @@
   width: 365px;
   height: 205.99px;
   flex-direction: column;
-  transition-duration: .4s;
-}
-
-.cardContainer:hover {
-  transition-delay: .4s;
-  width: 385px;
-  height: 218.99px;
 }
 
 img {
