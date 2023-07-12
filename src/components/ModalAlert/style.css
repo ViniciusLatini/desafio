@@ -1,0 +1,45 @@
+.box {
+  background: #2E2E35;
+  width: 40vw;
+  height: 25vh;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.6rem;
+}
+
+.box span {
+  color:#FFF;
+  font-size: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.box div {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.box div button {
+  background: none;
+  color:#FFF;
+  border: 1px solid #fff;
+  width: 8rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  font-family: 'Inter';
+  cursor: pointer;
+}
+
+.box div button:last-child {
+  background: none;
+  color:#FFF;
+  border: 1px solid #ed135c;
+  width: 8rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  font-family: 'Inter';
+  cursor: pointer;
+}
