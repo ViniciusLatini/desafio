@@ -9,6 +9,7 @@ import './style.css';
 import { Link } from 'react-router-dom';
 import { FavoriteBorder, StarBorder } from '@mui/icons-material';
 import FavoriteButton from '../../components/FavoriteButton';
+import RatingButton from '../../components/RatingButton';
 
 interface Game {
   id: number;
@@ -179,13 +180,10 @@ function Home() {
           setFavoriteActive={setFavoriteActive}
         />
 
-        <button
-          type='button'
-          className='ratingButton'
-          onClick={() => setRatingSort(ratingSort === 2 ? 0 : ratingSort+1)}
-        >
-          <StarBorder htmlColor='#EFEFF1'/>
-        </button>
+        <RatingButton
+          ratingSort={ratingSort}
+          setRatingSort={setRatingSort}
+        />
 
       </div>
 

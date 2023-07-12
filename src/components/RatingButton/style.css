@@ -1,0 +1,61 @@
+.ratingButton {
+  height: 2rem;
+  border-radius: 0.3125rem;
+  padding: 0px 0.2rem;
+  background: #2E2E35;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  animation: fadeIn 1.5s ease-in-out;
+  opacity: 100%;
+  transition: opacity 1s;
+}
+
+.ratingButton:hover {
+  opacity: 50%;
+  transition: opacity 1s;
+}
+
+.ratingButton span {
+  color: white;
+  font-family: 'Inter';
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.ratingButtonActive {
+  height: 2rem;
+  border-radius: 0.3125rem;
+  padding: 0px 0.2rem;
+  background: #FAAF00;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  animation: fadeIn 1.5s ease-in-out;
+  opacity: 100%;
+  transition: opacity 1s;
+}
+
+.ratingButtonActive:hover {
+  opacity: 50%;
+  transition: opacity 1s;
+}
+
+.ratingButtonActive span {
+  color: white;
+  font-family: 'Inter';
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
