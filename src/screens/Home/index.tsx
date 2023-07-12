@@ -8,6 +8,7 @@ import CardSkeleton from '../../components/CardSkeleton';
 import './style.css';
 import { Link } from 'react-router-dom';
 import { FavoriteBorder, StarBorder } from '@mui/icons-material';
+import FavoriteButton from '../../components/FavoriteButton';
 
 interface Game {
   id: number;
@@ -173,13 +174,10 @@ function Home() {
           )}
         </select>
 
-        <button
-          type='button'
-          onClick={() => {setFavoriteActive(!favoriteActive)}}
-          className='favoriteButton'
-        >
-          <FavoriteBorder htmlColor='#EFEFF1'/>
-        </button>
+        <FavoriteButton
+          favoriteActive = {favoriteActive}
+          setFavoriteActive={setFavoriteActive}
+        />
 
         <button
           type='button'

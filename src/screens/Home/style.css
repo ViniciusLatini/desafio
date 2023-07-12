@@ -33,17 +33,6 @@ select {
   font-size: 1rem;
 }
 
-.favoriteButton {
-  width: 2.625rem;
-  height: 2rem;
-  border-radius: 0.3125rem;
-  background: #2E2E35;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .ratingButton {
   width: 2.625rem;
   height: 2rem;

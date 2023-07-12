@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import './Card.css';
+import './style.css';
 import { Checkbox, Rating } from '@mui/material';
 import { Favorite, FavoriteBorder, StarBorder } from '@mui/icons-material';
-import { UserController } from '../core/controllers/User';
-import { AuthContext } from '../context/AuthContext';
+import { UserController } from '../../core/controllers/User';
+import { AuthContext } from '../../context/AuthContext';
 
 interface CardProps {
   id: number;
