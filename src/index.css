@@ -20,6 +20,8 @@
 
 body {
   background: #121214;
+  background-image: url("./assets/bg.jpg");
+  object-fit: contain;
   display: flex;
   justify-content: center;
   margin: 0;
