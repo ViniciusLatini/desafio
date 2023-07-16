@@ -3,32 +3,63 @@ import { useHistory } from 'react-router-dom';
 
 import { AuthContext } from '../../context/AuthContext';
 import './style.css'
+import ModalAlert from '../../components/ModalAlert';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [description, setDescription] = useState("");
 
   const history = useHistory();
 
-  const {login, cadastro} = useContext(AuthContext);
+  const {login, cadastro, load} = useContext(AuthContext);
 
   async function signIn(event: React.SyntheticEvent) {
     event.preventDefault();
     try {
       await login(email, password);
+      await load();
       history.push("/");
     } catch (error: any) {
-      setError(error.message);
+      if(error === 'auth/user-not-found') {
+        setMessage('Falha na autenticação')
+        setDescription('Credenciais inválidas, caso não tenha uma conta preencha os campos e cadastre-se!')
+      } else {
+        setMessage('Houve um erro inesperado')
+        setDescription('Não foi possível efetuar o login, tente mais tarde!')
+      }
+      setOpen(true);
+
     }
   }
 
   async function signUp() {
     try {
       await cadastro(email, password);
+      await load();
       history.push("/");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.message);
+      if(error.message === 'auth/invalid-email') {
+        setMessage('Email inválido')
+        setDescription('Utilize um email válido para realizar o cadastro')
+      } else if(error.message === 'auth/missing-password') {
+        setMessage('Senha inválida')
+        setDescription('Preencha o campo senha para realizar o cadastro')
+      } else if(error.message === 'auth/weak-password'){
+        setMessage('Senha inválida')
+        setDescription('Sua senha precisa ter no mínimo 6 caracters')
+      } else if(error.message === 'auth/email-already-in-use') {
+        setMessage('Email já utilizado')
+        setDescription('Esse e-mail já está cadastrado')
+      } else {
+        setMessage('Houve um erro inesperado')
+        setDescription('Não foi possível efetuar o login, tente mais tarde!')
+      }
+      setOpen(true);
     }
   }
 
@@ -64,15 +95,23 @@ function Login() {
           </button>
         </form>
 
-        {error === 'auth/user-not-found' && (
-          <div className="infoContent">
-            <span>Credenciais inválidas!</span>
-            <button type='button' onClick={signUp}>
-              Clique aqui para criar uma nova conta com essas credencias!
-            </button>
-          </div>
-        )}
+        <div className="infoContent">
+          <span>Não possui uma conta?</span>
+          <span>
+            Digite seu email e senha e confirme no botão abaixo!
+          </span>
+          <button type='button' onClick={signUp}>
+            Cadastre-se
+          </button>
+        </div>
 
+        <ModalAlert
+          error={true}
+          open={open}
+          setOpen={setOpen}
+          title={message}
+          description={description}
+        />
 
       </div>
     </div>

@@ -58,16 +58,13 @@
   margin-top: 1rem;
 }
 
-.infoContent span {
-  color: #f63f3f;
-}
 
 .infoContent button {
   background: none;
   border: none;
   display: flex;
   align-items: flex-start;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-family: 'Inter';
   font-weight: 700;
   color: #000;
