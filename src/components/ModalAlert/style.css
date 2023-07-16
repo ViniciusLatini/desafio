@@ -1,7 +1,5 @@
 .box {
   background: #2E2E35;
-  width: 40vw;
-  height: 25vh;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -16,13 +14,13 @@
   margin-bottom: 2rem;
 }
 
-.box div {
+.errorContainer {
   display: flex;
-  justify-content: space-around;
   width: 100%;
+  justify-content: center;
 }
 
-.box div button {
+.errorContainer button {
   background: none;
   color:#FFF;
   border: 1px solid #fff;
@@ -33,7 +31,25 @@
   cursor: pointer;
 }
 
-.box div button:last-child {
+
+.loginButtons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.loginButtons button {
+  background: none;
+  color:#FFF;
+  border: 1px solid #fff;
+  width: 8rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  font-family: 'Inter';
+  cursor: pointer;
+}
+
+.loginButtons button:last-child {
   background: none;
   color:#FFF;
   border: 1px solid #ed135c;

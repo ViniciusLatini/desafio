@@ -7,9 +7,12 @@ import { useHistory } from 'react-router-dom';
 interface ModalAlertProps {
   open: boolean;
   setOpen: (value: boolean) => void;
+  title: string;
+  description: string;
+  error: boolean
 }
 
-function ModalAlert({open, setOpen} : ModalAlertProps) {
+function ModalAlert({open, setOpen, title, description, error} : ModalAlertProps) {
   const history = useHistory();
   const handleClose = () => setOpen(false);
 
@@ -22,17 +25,26 @@ function ModalAlert({open, setOpen} : ModalAlertProps) {
     >
       <Fade in={open}>
         <div className='box'>
-          <h1>Acesso negado!</h1>
-          <span>Para realizar essa operação você precisa estar logado</span>
+          <h1>{title}</h1>
+          <span>{description}</span>
 
-          <div>
-            <button onClick={() => history.push('/auth')}>
-              Logar
-            </button>
-            <button type='button' onClick={handleClose}>
-              Cancelar
-            </button>
-          </div>
+          {error ? (
+            <div className='errorContainer'>
+              <button type='button' onClick={handleClose}>
+                Ok
+              </button>
+            </div>
+          ) : (
+            <div className='loginButtons'>
+              <button onClick={() => history.push('/auth')}>
+                Logar
+              </button>
+              <button type='button' onClick={handleClose}>
+                Cancelar
+              </button>
+            </div>
+
+          )}
 
         </div>
       </Fade>
