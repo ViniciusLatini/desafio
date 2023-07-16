@@ -29,9 +29,12 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
 
   async function login(email: string, password: string) {
     try {
+      // Autenticação de email e senha no Firebase
       await signInWithEmailAndPassword(auth, email, password)
       .then((resp) => {
+        // Salvando token de acesso
         setUser({id: resp.user.uid});
+        // Carregando jogos favoritos e avaliados do usuario
         load(resp.user.uid);
       });
     } catch (error : any) {
@@ -41,8 +44,11 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
 
   async function cadastro(email: string, password: string) {
     try {
+      // Criando um token de usuário
       const resp = await createUserWithEmailAndPassword(auth, email, password);
+      // Criando um novo usuário no Doc do Firebase
       UserController().create(resp.user.uid);
+      // Salvando token de acesso
       setUser({id: resp.user.uid});
     } catch (error : any) {
       throw new Error(error.code);
@@ -94,8 +100,8 @@ export function AuthContextProvider({ children } : {children: React.ReactNode}) 
   }, [])
 
   return (
-      <AuthContext.Provider value={{ user, favorites, ratings ,login, cadastro, updateFavorite, updateRating}}>
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider value={{ user, favorites, ratings ,login, cadastro, updateFavorite, updateRating}}>
+      {children}
+    </AuthContext.Provider>
   )
 }

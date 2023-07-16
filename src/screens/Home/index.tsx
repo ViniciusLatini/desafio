@@ -34,10 +34,7 @@ function Home() {
   const [error, setError] = useState('');
   const [favoriteActive, setFavoriteActive] = useState(false);
   const [ratingSort, setRatingSort] = useState(0);
-
   const [open, setOpen] = useState(false);
-
-
   const {favorites, ratings} = useContext(AuthContext);
 
   const errorMessages = {
@@ -46,9 +43,11 @@ function Home() {
     serverError: "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
   }
 
+  // Dados para consumir a API de jogos diponibilizada
   const email = "email@email.com";
   const url = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
+  // Função responsável por todos os filtros que podem ser aplicados na lista de jogos
   function filterGames() {
     if(games.length > 0) {
       if(ratingSort > 0) {
@@ -64,11 +63,12 @@ function Home() {
           .filter(game => game.title.includes(search))
           .filter(game => game.rating > 0)
           .sort((a,b) => ratingSort === 1 ? b.rating - a.rating : a.rating - b.rating)
+          // Ordenação por avaliação: 1) ASC 2) DESC
         );
 
 
       } else {
-        const filteredGames = games
+        const filteredGames = games;
         return (
           filteredGames
           .filter(game => favoriteActive ? favorites.includes(game.id) : game)

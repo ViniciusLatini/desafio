@@ -20,11 +20,10 @@ function Login() {
   async function signIn(event: React.SyntheticEvent) {
     event.preventDefault();
     try {
-      await login(email, password);
-      history.push("/");
+      await login(email, password); // Chamando função login do Context
+      history.push("/"); // Redirecionamento para Home caso o login for concluído
     } catch (error: any) {
-      console.log(error);
-
+      // Tratamentos de falhas do Login e exibição do modal
       if(error.message === 'auth/user-not-found') {
         setMessage('Falha na autenticação')
         setDescription('Credenciais inválidas, caso não tenha uma conta preencha os campos e cadastre-se!')
@@ -39,10 +38,10 @@ function Login() {
 
   async function signUp() {
     try {
-      await cadastro(email, password);
-      history.push("/");
+      await cadastro(email, password); // Chamando função cadastro do Context
+      history.push("/"); // Redirecionamento para Home caso o login for concluído
     } catch (error: any) {
-      console.log(error.message);
+      // Tratamentos de falhas do Login e exibição do modal
       if(error.message === 'auth/invalid-email') {
         setMessage('Email inválido')
         setDescription('Utilize um email válido para realizar o cadastro')
