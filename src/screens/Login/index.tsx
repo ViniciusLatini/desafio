@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { ArrowBack } from '@mui/icons-material';
 
 import { AuthContext } from '../../context/AuthContext';
 import './style.css'
@@ -9,7 +10,6 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [description, setDescription] = useState("");
 
@@ -24,7 +24,9 @@ function Login() {
       await load();
       history.push("/");
     } catch (error: any) {
-      if(error === 'auth/user-not-found') {
+      console.log(error);
+
+      if(error.message === 'auth/user-not-found') {
         setMessage('Falha na autenticação')
         setDescription('Credenciais inválidas, caso não tenha uma conta preencha os campos e cadastre-se!')
       } else {
@@ -39,7 +41,6 @@ function Login() {
   async function signUp() {
     try {
       await cadastro(email, password);
-      await load();
       history.push("/");
     } catch (error: any) {
       console.log(error.message);
@@ -66,7 +67,12 @@ function Login() {
   return(
     <div className="login">
       <div className="boxLogin">
-        <h1>Login</h1>
+        <div className='header'>
+          <button className='buttonBack' onClick={() => {history.goBack()}}>
+            <ArrowBack />
+          </button>
+          <h1>Login</h1>
+        </div>
         <span className='subtitle'>Realize o login para manter seus games atualizados!</span>
 
         <form action="" onSubmit={ (e : React.SyntheticEvent) => signIn(e)}>

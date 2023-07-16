@@ -16,9 +16,24 @@
   padding: 2rem 3rem;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+
+.buttonBack {
+  display: flex;
+  width: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .boxLogin h1 {
   color: #000;
-  margin-bottom: 1rem;
+
 }
 
 .subtitle {

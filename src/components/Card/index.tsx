@@ -47,9 +47,6 @@ function Card({title, thumbnail, genre, id, favorite, rating, setOpen}:CardProps
                   event.preventDefault();
                   setOpen(true);
                   setGameRating(0);
-                  console.log(event);
-
-                  console.log(gameRating);
 
                 }
                 else if(newValue) {
@@ -73,26 +70,8 @@ function Card({title, thumbnail, genre, id, favorite, rating, setOpen}:CardProps
 
                 if(!isFavorite) {
                   await UserController().setFavorite(id, user.id)
-                  .catch(
-                    error => {
-                      if(error.message === "Nao logado") {
-                        //enviar pro login
-                      } else {
-                        //lançar aviso
-                      }
-                    }
-                  )
                 } else {
                   await UserController().removeFavorite(id,user.id)
-                  .catch(
-                    error => {
-                      if(error.message === "Nao logado") {
-                        //enviar pro login
-                      } else {
-                        //lançar aviso
-                      }
-                    }
-                  )
                 }
                 updateFavorite();
               }}

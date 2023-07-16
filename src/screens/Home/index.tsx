@@ -38,7 +38,7 @@ function Home() {
   const [open, setOpen] = useState(false);
 
 
-  const {user, favorites, ratings} = useContext(AuthContext);
+  const {favorites, ratings} = useContext(AuthContext);
 
   const errorMessages = {
     serverFailed: "O servidor falhou em responder, tente recarregar a página",
@@ -208,7 +208,7 @@ function Home() {
                 release_date={game.release_date}
                 freetogame_profile_url={game.freetogame_profile_url}
                 favorite={favorites ? favorites.includes(game.id) : false}
-                rating={ratings[game.id] ? ratings[game.id] : 0}
+                rating={ratings && ratings[game.id] ? ratings[game.id] : 0}
                 setOpen={setOpen}
               />
             ))}
