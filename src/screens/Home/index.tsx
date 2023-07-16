@@ -62,6 +62,7 @@ function Home() {
           .filter(game => favoriteActive ? favorites.includes(game.id) : game)
           .filter(game => selectedGenre !== '' ? game.genre === selectedGenre : game)
           .filter(game => game.title.includes(search))
+          .filter(game => game.rating > 0)
           .sort((a,b) => ratingSort === 1 ? b.rating - a.rating : a.rating - b.rating)
         );
 
@@ -224,6 +225,9 @@ function Home() {
       <ModalAlert
         open={open}
         setOpen={setOpen}
+        title='Acesso negado!'
+        description='Para realizar essa operação você precisa estar logado'
+        error={true}
       />
     </div>
   );
