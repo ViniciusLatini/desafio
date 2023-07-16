@@ -227,7 +227,7 @@ function Home() {
         setOpen={setOpen}
         title='Acesso negado!'
         description='Para realizar essa operação você precisa estar logado'
-        error={true}
+        error={false}
       />
     </div>
   );
