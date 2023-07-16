@@ -15,13 +15,12 @@ function Login() {
 
   const history = useHistory();
 
-  const {login, cadastro, load} = useContext(AuthContext);
+  const {login, cadastro} = useContext(AuthContext);
 
   async function signIn(event: React.SyntheticEvent) {
     event.preventDefault();
     try {
       await login(email, password);
-      await load();
       history.push("/");
     } catch (error: any) {
       console.log(error);
